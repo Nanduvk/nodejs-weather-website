@@ -8,22 +8,23 @@ console.log(__dirname)
 console.log(path.join(__dirname,'../public'))
 
 const app=express()
+const port=process.env.PORT || 3000
 
+//Defines paths for Express config
 const publicdirPath=(path.join(__dirname,'../public'))
 const viewsPath=path.join(__dirname,'../templates/views')
 const partialsPath=path.join(__dirname,'../templates/partials')
 
-//Defines paths for Express config
+//Setup handlebars engine and views location
 app.set('view engine','hbs')
 app.set('views',viewsPath)
 hbs.registerPartials(partialsPath)
 
 
-//Setup handlebars engine and views location
+//Setup static directory to serve
 app.use(express.static(publicdirPath))
 
-
-//Setup static directory to serve(route handlers)
+// route handlers
 app.get('',(req,res)=>{
     res.render('index',{
         title: 'Weather App',
@@ -100,6 +101,6 @@ app.get("*",(req,res)=>{
 })
 
 //Start Server
-app.listen(3000,()=>{
-    console.log("Server Started Up!!")
+app.listen(port,()=>{
+    console.log("Server started up on port "+ port)
 })
